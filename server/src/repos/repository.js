@@ -4,14 +4,21 @@ import { ObjectId, Collection, ReturnDocument } from "mongodb";
 const /**@type {{ playersCollection:Collection ,roundsCollection: Collection}}*/{playersCollection, roundsCollection} = getCollections()
 
 export const playerRepo = {
-    createPlayer: async () => {
-        const result = await playersCollection.insertOne({chips: 1000, created_at: new Date().toISOString()})
+    createPlayer: async (chips) => {
+        const result = await playersCollection.insertOne({chips, created_at: new Date().toISOString()})
         return result.insertedId.toString()
     },
     getPlayerById: async (playerId) => {
         const player = await playersCollection.findOne({_id: new ObjectId(playerId)})
         return player
+    }, 
+    decreasePlayerChips: async (playerId, bet) => {
+        return await playersCollection.findOneAndUpdate({_id: playerId}, {$inc: {chips: -bet}}, {returnDocument: "after"})
+    },
+    increasePlayerChips: async (playerId, amount) => {
+        return await playersCollection.findOneAndUpdate({_id: new ObjectId(playerId)}, {$inc: {chips: amount}}, {returnDocument: "after"})
     }
+    
 }
 
 export const roundsRepo = {

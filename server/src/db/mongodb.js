@@ -10,9 +10,17 @@ let playersCollection;
 let roundsCollection;
 
 async function connectToMongo() {
-    await client.connect()
-    createDB()
-    createCollections()
+    try {
+        console.log("start connectiong to mongodb")
+        await client.connect()
+        console.log("connected to mongodb")
+        console.log("start creating db")
+        createDB()
+        console.log("db created, start creating collections")
+        createCollections()
+    } catch (error) {
+        console.error(error.message)
+    }
 }
 
 function createDB() {
