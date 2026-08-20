@@ -35,3 +35,19 @@ export async function startRound(bet) {
     });
     return res
 }
+
+export async function hit() {
+    const res = fetch("http://localhost:3000/hit", {
+        method: "post",
+        headers: {"x-player-id": localStorage.getItem("playerId")}
+    })
+    return res
+}
+
+export async function stand() {
+    const res = await fetch("http://localhost:3000/stand", {
+        method: "post",
+        headers: {"x-player-id": localStorage.getItem("playerId")}
+    })  
+    return res  
+}

@@ -2,7 +2,7 @@ import express from "express";
 import env from "dotenv"
 import cors from "cors"
 import { checkExistPlayer, logger, errorHandler } from "./middlewares/middleware.js";
-import { createPlayer, getOpenRound, OpenNewRound } from "./controllers/controller.js";
+import { createPlayer, getOpenRound, hit, OpenNewRound, stand } from "./controllers/controller.js";
 env.config({path: "./server/.env"})
 const PORT = process.env.PORT
 
@@ -19,8 +19,8 @@ app.post("/start-game", createPlayer)
 app.use(checkExistPlayer)
 
 app.post("/start-round", OpenNewRound)
-app.post("/hit", (req, res) => res.send("not implemented"))
-app.post("/stand", (req, res) => res.send("not implemented"))
+app.post("/hit", hit)
+app.post("/stand", stand)
 app.get("/my-round", getOpenRound)
 
 app.use(errorHandler)

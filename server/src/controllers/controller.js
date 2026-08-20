@@ -34,4 +34,23 @@ async function OpenNewRound(req, res, next) {
     }
 }
 
-export { createPlayer, getOpenRound, OpenNewRound };
+async function hit(req, res, next) {
+    try {
+        const state = await service.hit(req.player)
+        res.json(state)
+    } catch (error) {
+        next(error)
+    }   
+}
+
+async function stand(req, res, next) {
+    try {
+        console.log(req.player)
+        const state = await service.stand(req.player)
+        res.json(state)
+    } catch (error) {
+        next(error)
+    }    
+}
+
+export { createPlayer, getOpenRound, OpenNewRound, hit, stand };

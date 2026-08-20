@@ -16,7 +16,7 @@ export const playerRepo = {
         return await playersCollection.findOneAndUpdate({_id: playerId}, {$inc: {chips: -bet}}, {returnDocument: "after"})
     },
     increasePlayerChips: async (playerId, amount) => {
-        return await playersCollection.findOneAndUpdate({_id: new ObjectId(playerId)}, {$inc: {chips: amount}}, {returnDocument: "after"})
+        return await playersCollection.findOneAndUpdate({_id: playerId}, {$inc: {chips: amount}}, {returnDocument: "after"})
     }
     
 }
